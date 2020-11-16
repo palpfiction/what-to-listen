@@ -115,7 +115,6 @@ function error(message) {
 }
 
 function mapToResponse(album) {
-    console.log(album)
     if (album.error) return album;
     return {
         album: {

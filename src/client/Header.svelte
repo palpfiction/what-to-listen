@@ -3,11 +3,17 @@
         color: var(--primary);
         font-size: 3em;
         font-weight: 800;
+        margin-bottom: 0em;
     }
 
     p {
         color: grey;
         font-variation-settings: "slnt" -15;
+        margin-top: 0em;
+    }
+
+    header {
+        margin-bottom: 1em;
     }
 </style>
 

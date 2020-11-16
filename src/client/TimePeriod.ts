@@ -11,7 +11,7 @@ type EnumDictionary<T extends string | symbol | number, U> = {
     [K in T]: U;
 };
 
-const labels: EnumDictionary<TimePeriod, String> = {
+const labels: EnumDictionary<TimePeriod, string> = {
 	[TimePeriod.OVERALL]: "Overall",
 	[TimePeriod.SEVEN_DAYS]: "7 days",
 	[TimePeriod.ONE_MONTH]: "1 month",
@@ -20,7 +20,7 @@ const labels: EnumDictionary<TimePeriod, String> = {
 	[TimePeriod.TWELVE_MONTHS]: "12 months",
 }
 
-const values: EnumDictionary<TimePeriod, String> = {
+const values: EnumDictionary<TimePeriod, string> = {
 	[TimePeriod.OVERALL]: "overall",
 	[TimePeriod.SEVEN_DAYS]: "7day",
 	[TimePeriod.ONE_MONTH]: "1month",
@@ -30,15 +30,15 @@ const values: EnumDictionary<TimePeriod, String> = {
 }
 
 
-export function timePeriodToLabel(timePeriod: TimePeriod ): String {
+export function timePeriodToLabel(timePeriod: TimePeriod ): string {
 	return labels[timePeriod];
 }
 
-export function timePeriodToValue(timePeriod: TimePeriod ): String {
+export function timePeriodToValue(timePeriod: TimePeriod ): string {
 	return values[timePeriod];
 }
 
-export function parseTimePeriod(timePeriod: String): TimePeriod {
+export function parseTimePeriod(timePeriod: string): TimePeriod {
 	return TimePeriod[timePeriod as keyof typeof TimePeriod];
 }
 

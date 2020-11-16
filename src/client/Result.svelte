@@ -5,6 +5,10 @@
     import { onMount } from "svelte";
     import Circle from "./Circle.svelte";
     import { appState } from "./Stores";
+    import { timePeriodToValue } from "./TimePeriod";
+    import type { response } from "express";
+
+    const BASE_URL = "get-album";
 
     let albumResponse: Promise<AlbumResponse>;
 
@@ -13,9 +17,28 @@
     });
 
     async function getAlbum(): Promise<AlbumResponse> {
-        return await fetch(
-            `get-album?user=${$appState.albumRequest.user}`
-        ).then((r) => r.json());
+        return await fetch(buildAlbumRequestURL()).then((r) => r.json());
+    }
+
+    function buildAlbumRequestURL() {
+        const url = new URL(BASE_URL, window.location.href);
+        url.searchParams.append("user", $appState.albumRequest.user);
+
+        if ($appState.albumRequest.minPlayCount) {
+            url.searchParams.append(
+                "minPlayCount",
+                $appState.albumRequest.minPlayCount.toString()
+            );
+        }
+
+        if ($appState.albumRequest.period) {
+            url.searchParams.append(
+                "period",
+                timePeriodToValue($appState.albumRequest.period)
+            );
+        }
+
+        return url.href;
     }
 
     function onImageLoadingError(event) {
@@ -25,9 +48,12 @@
 </script>
 
 <style>
+    #result {
+        padding: 10px;
+    }
+
     #album {
         text-align: left;
-        padding: 10px;
     }
 
     img {
@@ -51,6 +77,12 @@
     h1 {
         margin-top: 0;
     }
+
+    #playcount {
+        display: block;
+        color: var(--primary);
+        margin-top: 5px;
+    }
 </style>
 
 <div>
@@ -59,15 +91,22 @@
             <Circle radius={50} />
         {:then response}
             {#if response.error}
-                <span>error bro</span>
+                <h1>i tried, but i couldn't find anything like that :(</h1>
+                <button
+                    class="btn-secondary"
+                    on:click={() => ($appState.formSent = false)}>go back</button>
             {:else}
-                <div id="album" transition:slide={{ duration: 400 }}>
-                    <h2>{response.album.artist}</h2>
-                    <h1>{response.album.name}</h1>
+                <div id="result" transition:slide={{ duration: 400 }}>
+                    <div id="album">
+                        <h2>{response.album.artist}</h2>
+                        <h1>{response.album.name}</h1>
+                    </div>
+
                     <img
                         src={response.album.image}
                         alt={response.album.name}
                         on:error={onImageLoadingError} />
+                    <span id="playcount">{response.album.playcount} plays</span>
 
                     <button on:click={() => (albumResponse = getAlbum())}>try
                         again</button>
