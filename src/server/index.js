@@ -4,12 +4,18 @@ const express = require('express')
 const port = process.env.PORT || 5000
 const cors = require('cors')
 const path = require('path')
+const fs = require('fs')
+const morgan = require('morgan')
 const WhatToListen = require('./WhatToListen')
+
+var logStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' })
+
 
 const app = express()
 const whatToListen = new WhatToListen(process.env.API_KEY)
 
 app.use(cors())
+app.use(morgan('tiny',  { stream: logStream }));
 app.use(express.static(path.join(__dirname, '../../public')));
 
 app.get('/get-album', async (req, res) => {
