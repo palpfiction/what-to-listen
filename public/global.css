@@ -15,14 +15,11 @@ body {
 	grid-template-rows: auto 1fr auto;
 	color: #555;
 	margin: 0;
-	padding: 8px;
 	box-sizing: border-box;
 	font-family:'Recursive', monospace;
 	font-variation-settings: 'MONO' 1, 'CASL' 1;
 	text-transform: lowercase;
 	text-align: center;
-	padding: 1em;
-	max-width: 500px;
 	margin: 0 auto;
 }
 
