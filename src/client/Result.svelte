@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { AlbumResponse } from "./AlbumResponse";
     import { slide } from "svelte/transition";
-    import type { AlbumRequest } from "./AlbumRequest";
     import { onMount } from "svelte";
     import Circle from "./Circle.svelte";
     import { appState } from "./Stores";
@@ -39,7 +38,7 @@
 
         return url.href;
     }
-
+    // TODO: which type is event?
     function onImageLoadingError(event) {
         if (event.target.src !== "default-album-cover.png")
             event.target.src = "default-album-cover.png";

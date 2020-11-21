@@ -12,6 +12,7 @@ export const appState = writable<AppState>(
 		albumRequest: {
 			user: undefined,
 			minPlayCount: 10,
+			maxPlayCount: undefined,
 			period: TimePeriod.OVERALL
 		},
 
