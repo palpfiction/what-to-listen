@@ -24,8 +24,8 @@ The server will be running at the port specified in the `.env` file (`5000` by d
 
 ### Environment variables
 
-Variable | Type | Default | Description
------------|------|---------|-------------|----
+| Variable | Type | Default | Description |
+|-----------|------|---------|-------------|
 `PORT` | number | 5000 | The port on which the app will be running
 `API_KEY` | string | undefined | Last.fm API Key. You can get one [here](https://www.last.fm/api/account/create).
 
