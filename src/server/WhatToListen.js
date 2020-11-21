@@ -20,12 +20,14 @@ class WhatToListen {
      * @param {Object} params
      * @param {string} params.user
      * @param {number} params.minPlayCount
+     * @param {number} params.maxPlayCount
      * @param {("7day"|"1month"|"3month"|"6month"|"12month"|"overall")} params.period defaults to "overall"
      * @returns {Promise}
      */
     async getAlbumToListen(params) {
         if (!params.user) return error("User is required");
         if (!params.minPlayCount) params.minPlayCount = 10;
+        if (params.maxPlayCount && params.minPlayCount > params.maxPlayCount) return error("Maximum playcount is greater than minimum playcount.")
         if (!params.period) params.period = "overall";
 
 
@@ -62,14 +64,13 @@ async function getRandomAlbum(maxPage, params, lastFmClient) {
     );
 
     const candidates = topAlbums.album.filter(
-        (album) => parseInt(album.playcount) >= params.minPlayCount
+        (album) => albumMeetsCriteria(album, params.minPlayCount, params.maxPlayCount)
     );
 
     if (candidates.length <= 0)
         return getRandomAlbum(page, params, lastFmClient);
 
-    const album = topAlbums.album[getRandomNumber(0, topAlbums.album.length)];
-    return album;
+    return topAlbums.album[getRandomNumber(0, topAlbums.album.length)];
 }
 
 async function getTopAlbums(user, period, page, lastFmClient) {
@@ -124,6 +125,22 @@ function mapToResponse(album) {
             playcount: album.playcount
         }
     }
+}
+
+/**
+ * checks if album meets the criteria specified by user.
+ * @param {Object} album last.fm album
+ * @param {number} minPlaycount minimum playcount specified by the user
+ * @param {number} maxPlayCount maximum playcount specified by the user
+ * @returns true if album meets the criteria, false otherwise.
+ */
+function albumMeetsCriteria(album, minPlayCount, maxPlayCount) {
+    const playCount = parseInt(album.playcount);
+
+    if (playCount < minPlayCount) return false;
+    if (maxPlayCount && playCount > maxPlayCount) return false;
+
+    return true;
 }
 
 module.exports = WhatToListen;

@@ -12,6 +12,7 @@ var logStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags
 
 
 const app = express()
+app.disable('x-powered-by');
 const whatToListen = new WhatToListen(process.env.API_KEY)
 
 app.use(cors())
@@ -24,6 +25,7 @@ app.get('/get-album', async (req, res) => {
 	const result = await whatToListen.getAlbumToListen({
 		user: req.query.user,
 		minPlayCount: req.query.minPlayCount,
+		maxPlayCount: req.query.maxPlayCount,
 		period: req.query.period
 	})
 
