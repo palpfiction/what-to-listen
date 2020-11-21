@@ -1,6 +1,6 @@
 <style>
     footer {
-        font-variation-settings: "slnt" -15;
+        font-style: italic;
         color: #555;
         background-color: #f0f0f0;
         padding: 1em;

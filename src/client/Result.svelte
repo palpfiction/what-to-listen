@@ -115,6 +115,13 @@
                         on:click={() => ($appState.formSent = false)}>go back</button>
                 </div>
             {/if}
+        {:catch}
+            <h1>
+                seems like something isn't working... maybe try again later?
+            </h1>
+            <button
+                class="btn-secondary"
+                on:click={() => ($appState.formSent = false)}>go back</button>
         {/await}
     {/if}
 </div>

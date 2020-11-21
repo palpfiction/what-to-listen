@@ -8,7 +8,7 @@
 
     p {
         color: grey;
-        font-variation-settings: "slnt" -15;
+        font-style: italic;
         margin-top: 0em;
     }
 
