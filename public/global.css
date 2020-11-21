@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..800,1,0,1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
 	--primary: #fc5185;
@@ -16,8 +16,7 @@ body {
 	color: #555;
 	margin: 0;
 	box-sizing: border-box;
-	font-family:'Recursive', monospace;
-	font-variation-settings: 'MONO' 1, 'CASL' 1;
+	font-family:'Space Mono', monospace;
 	text-transform: lowercase;
 	text-align: center;
 	margin: 0 auto;

@@ -1,11 +1,24 @@
 <script lang="ts">
-    import type { AlbumRequest } from "./AlbumRequest";
     import { getTimePeriods, timePeriodToLabel } from "./TimePeriod";
     import { appState } from "./Stores";
+    import { fly } from "svelte/transition";
+
+    let formErrors = [];
 
     function onSubmit(event: Event) {
         event.preventDefault();
-        $appState.formSent = true;
+        validate();
+        if (formErrors.length === 0) $appState.formSent = true;
+    }
+
+    function validate() {
+        formErrors = [];
+        if (isBlank($appState.albumRequest.user))
+            formErrors = [...formErrors, `Username must be provided.`];
+    }
+
+    function isBlank(str: string): boolean {
+        return !str || str.length === 0;
     }
 </script>
 
@@ -25,6 +38,14 @@
 </style>
 
 <form on:submit={onSubmit}>
+    {#if formErrors.length !== 0}
+        <ul id="validation-feedback" transition:fly={{ y: 200, duration: 600 }}>
+            {#each formErrors as error}
+                <li>{error}</li>
+            {/each}
+        </ul>
+    {/if}
+
     <label for="username">last.fm username</label>
     <input
         type="text"
