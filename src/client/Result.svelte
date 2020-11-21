@@ -6,7 +6,6 @@
     import Circle from "./Circle.svelte";
     import { appState } from "./Stores";
     import { timePeriodToValue } from "./TimePeriod";
-    import type { response } from "express";
 
     const BASE_URL = "get-album";
 
@@ -48,18 +47,14 @@
 </script>
 
 <style>
-    #result {
-        padding: 10px;
+    #container {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
     }
-
-    #album {
-        text-align: left;
-    }
-
     img {
         border-radius: 4px;
         margin: auto;
-        display: block;
         transition: 0.1s;
     }
 
@@ -79,13 +74,20 @@
     }
 
     #playcount {
-        display: block;
         color: var(--primary);
         margin-top: 5px;
     }
+
+    #result {
+        padding: 10px;
+    }
+
+    #album {
+        text-align: left;
+    }
 </style>
 
-<div>
+<div id="container">
     {#if albumResponse}
         {#await albumResponse}
             <Circle radius={50} />
@@ -106,7 +108,7 @@
                         src={response.album.image}
                         alt={response.album.name}
                         on:error={onImageLoadingError} />
-                    <span id="playcount">{response.album.playcount} plays</span>
+                    <div id="playcount">{response.album.playcount} plays</div>
 
                     <button on:click={() => (albumResponse = getAlbum())}>try
                         again</button>

@@ -31,47 +31,15 @@ a:hover {
 	text-decoration: underline;
 }
 
-label {
-	display: block;
-}
-
-input, button, select, textarea {
+input,
+button,
+select {
 	font-family: inherit;
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
 	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
-}
-
-input, select {
-	margin: 0.5em 0;
-	border: none;
-	background-color:#f0f0f0;
-	border-radius: 5px;
-	outline: none;
-	transition: 0.1s;
-	color: #555;
-}
-
-input:focus, select:focus {
-	transform: translate(-4px, -4px);
-	box-shadow: 4px 4px var(--primary);
-}
-
-input:disabled, select:disabled {
-	color: #ccc;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
 }
 
 button {

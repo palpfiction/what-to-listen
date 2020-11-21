@@ -16,6 +16,7 @@
         max-width: 500px;
         margin: 0 auto;
         margin-bottom: 1em;
+        padding: 0 1em;
     }
 </style>
 
