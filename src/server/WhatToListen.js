@@ -1,6 +1,6 @@
 const LastFm = require("lastfm-node-client");
 
-const LIMIT = 10;
+const LIMIT = 50;
 
 class WhatToListen {
     /**
@@ -70,7 +70,7 @@ async function getRandomAlbum(maxPage, params, lastFmClient) {
     if (candidates.length <= 0)
         return getRandomAlbum(page, params, lastFmClient);
 
-    return topAlbums.album[getRandomNumber(0, topAlbums.album.length)];
+    return candidates[getRandomNumber(0, candidates.length)];
 }
 
 async function getTopAlbums(user, period, page, lastFmClient) {

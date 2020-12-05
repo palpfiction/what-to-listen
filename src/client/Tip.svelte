@@ -9,6 +9,12 @@
     #info {
         margin-bottom: 10px;
     }
+
+    @media only screen and (max-width: 768px) {
+        .tip {
+            display: none;
+        }
+    }
 </style>
 
 <div class="tip">

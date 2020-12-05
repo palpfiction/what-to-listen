@@ -6,6 +6,12 @@
         margin-bottom: 0em;
     }
 
+    @media only screen and (max-width: 768px) {
+        h1 {
+            font-size: 2em;
+        }
+    }
+
     p {
         color: grey;
         font-style: italic;

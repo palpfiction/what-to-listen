@@ -8,7 +8,7 @@ const fs = require('fs')
 const morgan = require('morgan')
 const WhatToListen = require('./WhatToListen')
 
-var logStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' })
+var logStream = fs.createWriteStream(path.join(__dirname, '../../server.log'), { flags: 'a' })
 
 
 const app = express()
