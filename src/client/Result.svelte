@@ -5,6 +5,7 @@
     import Circle from "./Circle.svelte";
     import { appState } from "./Stores";
     import { timePeriodToValue } from "./TimePeriod";
+    import Keydown from "svelte-keydown";
 
     const BASE_URL = "get-album";
 
@@ -29,6 +30,13 @@
             );
         }
 
+        if ($appState.albumRequest.maxPlayCount) {
+            url.searchParams.append(
+                "maxPlayCount",
+                $appState.albumRequest.maxPlayCount.toString()
+            );
+        }
+
         if ($appState.albumRequest.period) {
             url.searchParams.append(
                 "period",
@@ -49,10 +57,11 @@
     #container {
         display: flex;
         flex-direction: column;
-        max-width: 500px;
+        max-width: var(--max-width);
+        padding: 10px;
     }
     img {
-        border-radius: 4px;
+        border-radius: var(--border-radius);
         margin: auto;
         transition: 0.1s;
     }
@@ -77,14 +86,14 @@
         margin-top: 5px;
     }
 
-    #result {
-        padding: 10px;
-    }
-
     #album {
         text-align: left;
     }
 </style>
+
+<Keydown
+    on:Enter={() => (albumResponse = getAlbum())}
+    on:b={() => ($appState.formSent = false)} />
 
 <div id="container">
     {#if albumResponse}

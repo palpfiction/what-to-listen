@@ -2,6 +2,8 @@
 
 :root {
 	--primary: #fc5185;
+	--border-radius: 5px;
+	--max-width: 300px;
 }
 
 html, body {
@@ -20,6 +22,16 @@ body {
 	text-transform: lowercase;
 	text-align: center;
 	margin: 0 auto;
+}
+
+code {
+	background-color: #f1f1f1;
+	color: var(--primary);
+	padding: 0 5px;
+	font-family:'Space Mono', monospace;
+	text-transform: uppercase;
+	font-size: 0.8rem;
+	font-weight: bold;
 }
 
 a {
@@ -48,7 +60,7 @@ button {
 	margin: 2em auto;
 	color: white;
 	background-color: var(--primary);
-	border-radius: 5px;
+	border-radius: var(--border-radius);
 	border: none;
 	padding: 1em;
 	transition: 0.1s;
@@ -69,4 +81,34 @@ button:hover {
 	border-width: none;
 	color: white;
 	background-color: var(--primary);
+}
+
+.gg-info {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    border-radius: 40px
+}
+.gg-info::after,
+.gg-info::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 2px;
+    background: currentColor;
+    left: 7px
+}
+.gg-info::after {
+    bottom: 2px;
+    height: 8px
+}
+.gg-info::before {
+    height: 2px;
+    top: 2px
 }
