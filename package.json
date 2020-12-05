@@ -15,7 +15,8 @@
         "client-dev": "rollup -c -w",
         "client-validate": "svelte-check",
         "server-start": "node src/server/index.js",
-        "dev": "concurrently \"npm:client-dev\" \"npm:server-start\""
+        "dev": "concurrently \"npm:client-dev\" \"npm:server-start\"",
+        "start": "rollup -c && node src/server/index.js"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^14.0.0",
