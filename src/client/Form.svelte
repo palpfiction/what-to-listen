@@ -2,6 +2,8 @@
     import { getTimePeriods, timePeriodToLabel } from "./TimePeriod";
     import { appState } from "./Stores";
     import { fly } from "svelte/transition";
+    import Keydown from "svelte-keydown";
+    import Tip from "./Tip.svelte";
 
     let formErrors = [];
 
@@ -15,6 +17,16 @@
         formErrors = [];
         if (isBlank($appState.albumRequest.user))
             formErrors = [...formErrors, `Username must be provided.`];
+
+        if (
+            $appState.albumRequest.maxPlayCount &&
+            $appState.albumRequest.minPlayCount >
+                $appState.albumRequest.maxPlayCount
+        )
+            formErrors = [
+                ...formErrors,
+                `Maximum plays cannot be greater than minimum plays.`,
+            ];
     }
 
     function isBlank(str: string): boolean {
@@ -27,7 +39,7 @@
         margin: 1em;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        max-width: 300px;
+        max-width: var(--max-width);
         gap: 1em;
     }
 
@@ -57,7 +69,7 @@
         margin: 0.5em 0;
         border: none;
         background-color: #f0f0f0;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         outline: none;
         transition: 0.1s;
         color: #555;
@@ -85,7 +97,18 @@
     input[type="number"] {
         -moz-appearance: textfield; /* Firefox */
     }
+
+    #validation-feedback {
+        text-align: left;
+        padding: 10px 20px;
+        border-style: solid;
+        border-radius: var(--border-radius);
+        border-width: 2px;
+        border-color: var(--primary);
+    }
 </style>
+
+<Keydown on:Enter={onSubmit} />
 
 <form on:submit={onSubmit}>
     {#if formErrors.length !== 0}
@@ -143,3 +166,4 @@
 
     <button type="submit" class="field">give me an album!</button>
 </form>
+<Tip />
