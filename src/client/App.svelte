@@ -16,7 +16,9 @@
 <Header />
 <main>
     {#if $appState.formSent}
-        <Result />
+        <div transition:slide={{ duration: 400 }}>
+            <Result />
+        </div>
     {:else}
         <div transition:slide={{ duration: 400 }}>
             <Form />
