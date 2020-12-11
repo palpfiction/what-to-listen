@@ -2,6 +2,7 @@ const LastFm = require("lastfm-node-client");
 
 const LIMIT = 50;
 
+const ALBUM_NOT_FOUND = `Couldn't find such an album`;
 class WhatToListen {
     /**
      * create a WhatToListen instance
@@ -27,35 +28,40 @@ class WhatToListen {
     async getAlbumToListen(params) {
         if (!params.user) return error("User is required");
         if (!params.minPlayCount) params.minPlayCount = 10;
-        if (params.maxPlayCount && params.minPlayCount > params.maxPlayCount) return error("Maximum playcount is greater than minimum playcount.")
+        if (params.maxPlayCount && params.minPlayCount > params.maxPlayCount)
+            return error(
+                "minimum playcount is greater than maximum playcount."
+            );
         if (!params.period) params.period = "overall";
 
-
         try {
-            const totalPages = await getTotalPages(
+            const totalPagesString = await getTotalPages(
                 params.user,
                 params.period,
                 this.lastFmClient
             );
 
+            const totalPages = parseInt(totalPagesString);
+
             if (totalPages == 0)
                 return error(`User does not exist or has no scrobbles.`);
 
-            const result = await getRandomAlbum(totalPages, params, this.lastFmClient);
-            return mapToResponse(result);
+            const result = await getRandomAlbum(1, totalPages, params, this.lastFmClient);
+            return mapToResponse(
+                result
+            );
         } catch (e) {
             return error(`Unkown error happened: ${e}`);
         }
     }
 }
 
-async function getRandomAlbum(maxPage, params, lastFmClient) {
-    if (maxPage === 1)
-        return {
-            error: `Couldn't find such an album`,
-        };
 
-    const page = getRandomNumber(1, maxPage);
+async function getRandomAlbum(minPage, maxPage, params, lastFmClient) {
+    if (minPage == maxPage || maxPage == 1)
+        return error(ALBUM_NOT_FOUND);
+
+    const page = getRandomNumber(minPage, maxPage);
     const topAlbums = await getTopAlbums(
         params.user,
         params.period,
@@ -63,12 +69,26 @@ async function getRandomAlbum(maxPage, params, lastFmClient) {
         lastFmClient
     );
 
-    const candidates = topAlbums.album.filter(
-        (album) => albumMeetsCriteria(album, params.minPlayCount, params.maxPlayCount)
+    const maxPlayCountInPage = parseInt(topAlbums.album[0].playcount);
+    const minPlayCountInPage = parseInt(
+        topAlbums.album[topAlbums.album.length - 1].playcount
     );
 
-    if (candidates.length <= 0)
-        return getRandomAlbum(page, params, lastFmClient);
+    if (minPlayCountInPage > params.maxPlayCount)
+        return getRandomAlbum(page, maxPage, params, lastFmClient);
+    if (maxPlayCountInPage < params.minPlayCount)
+        return getRandomAlbum(minPage, page, params, lastFmClient);
+
+    const candidates = topAlbums.album.filter((album) =>
+        albumMeetsCriteria(album, params.minPlayCount, params.maxPlayCount)
+    );
+
+    if (candidates.length <= 0) {
+        if (minPlayCountInPage == maxPlayCountInPage) {
+            return getRandomAlbum(minPage, page, params, lastFmClient);
+        }
+        return error(ALBUM_NOT_FOUND);
+    }
 
     return candidates[getRandomNumber(0, candidates.length)];
 }
@@ -116,15 +136,15 @@ function error(message) {
 }
 
 function mapToResponse(album) {
-    if (album.error) return album;
+    if (!album || album.error) return album;
     return {
         album: {
             name: album.name,
             artist: album.artist.name,
-            image: album.image[3]['#text'],
-            playcount: album.playcount
-        }
-    }
+            image: album.image[3]["#text"],
+            playcount: album.playcount,
+        },
+    };
 }
 
 /**

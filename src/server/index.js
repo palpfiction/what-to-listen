@@ -24,8 +24,8 @@ app.get('/get-album', async (req, res) => {
 
 	const result = await whatToListen.getAlbumToListen({
 		user: req.query.user,
-		minPlayCount: req.query.minPlayCount,
-		maxPlayCount: req.query.maxPlayCount,
+		minPlayCount: parseInt(req.query.minPlayCount),
+		maxPlayCount: parseInt(req.query.maxPlayCount),
 		period: req.query.period
 	})
 
