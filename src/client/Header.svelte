@@ -28,5 +28,5 @@
 
 <header>
     <h1>What to listen?</h1>
-    <p>revisit your <a href="www.last.fm">last.fm</a> library randomly</p>
+    <p>revisit your <a href="https://www.last.fm">last.fm</a> library randomly</p>
 </header>
