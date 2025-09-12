@@ -2,6 +2,9 @@
 
 > Get the name of a random album you've listened with your Last.fm account!
 
+> [!IMPORTANT] 
+> Turns out that [Glitch stopped hosting websites](https://blog.glitch.com/post/changes-are-coming-to-glitch/), so the original URL is not working. I'll try to migrate this to other hosting service soon.
+
 This project is possible thanks to the amazing [last.fm](www.last.fm) API and [this](https://github.com/rattletone/lastfm-node-client) great client to consume it from node. This is nothing more than a hobby project to explore some technologies and development methodologies while providing a useful service to people like me, who use this social network and sometimes need a little help to choose what to listen.
 
 ## Setup
