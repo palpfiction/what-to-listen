@@ -27,4 +27,5 @@
         id="github"
         href="https://github.com/palpfiction/what-to-listen">contribute on
         github!</a>
+    pssst... I also built a sort of smart recipe manager app... <a id="chef" href="https://thankschef.io">check it out, it's also free!</a>
 </footer>
